@@ -1,6 +1,5 @@
 // Contains most of the logic for fetching data from each API endpoint
 const request = require('request');
-
 /**
  * Makes a single API request to retrieve the user's IP address.
  * Input:
@@ -29,4 +28,27 @@ const fetchMyIP = function(callback) {
   });
 };
 
-module.exports = { fetchMyIP };
+const fetchCoordsByIP = function(ip, callback) {
+  request(`http://ipwho.is/${ip}`, (error, response, body) => {
+    //Edge Case: error
+    if (error) {
+      return callback(error, null);
+    }
+    const data = JSON.parse(body);
+    //Edge Case: invalid IP into URL
+    if (!data.success) {
+      const msg = `Success status: ${data.success}. Server message: ${data.message}`;
+      return callback(Error(msg), null);
+    }
+    //Returning latitude and longitude data
+    const latitude = data.latitude;
+    const longitude = data.longitude;
+    const latLng = {
+      latitude,
+      longitude
+    };
+    return callback(null, latLng);
+  });
+};
+
+module.exports = { fetchMyIP, fetchCoordsByIP };
