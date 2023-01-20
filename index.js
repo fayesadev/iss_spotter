@@ -18,6 +18,8 @@ nextISSTimesForMyLocation((error, passTimes) => {
   printFlyoverTimes(passTimes);
 });
 
+
+module.exports = printFlyoverTimes;
 // const nextISSTimesForMyLocation = function() {
 //   fetchMyIP((error, ip) => {
 //       if (error) {
