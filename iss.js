@@ -37,7 +37,7 @@ const fetchCoordsByIP = function(ip, callback) {
     const data = JSON.parse(body);
     //Edge Case: invalid IP into URL
     if (!data.success) {
-      const msg = `Success status: ${data.success}. Server message: ${data.message}`;
+      const msg = `Success status: ${data.success}. Server message: ${data.message} when fetching for IP ${data.ip}`;
       return callback(Error(msg), null);
     }
     //Returning latitude and longitude data
